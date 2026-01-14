@@ -10,7 +10,7 @@ import (
 const DefaultAPIKeySecret = "default-secret"
 
 func getSecret() string {
-	secret := conf.Global.API.APIKeySecret
+	secret := conf.Global.OpenAPI.APIKeySecret
 	if secret == "" {
 		secret = DefaultAPIKeySecret
 	}

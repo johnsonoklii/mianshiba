@@ -17,7 +17,7 @@ import (
 
 	"gorm.io/plugin/dbresolver"
 
-	"mianshiba/domain/user/internal/dal/model"
+	"mianshiba/domain/user/dal/model"
 )
 
 func newUser(db *gorm.DB, opts ...gen.DOOption) user {
@@ -57,7 +57,7 @@ type user struct {
 	CreatedAt field.Time
 	UpdatedAt field.Time
 	DeletedAt field.Field
-	Deleted   field.Bool
+	Deleted   field.Bool // 删除状态（0=未删除, 1=已删除）
 
 	fieldMap map[string]field.Expr
 }

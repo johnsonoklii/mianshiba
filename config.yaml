@@ -5,7 +5,7 @@ port: 8080
 # 数据库配置
 database:
   driver: "mysql"
-  dsn: "lizq:ai5201314.@tcp(localhost:3306)/mianshiba?charset=utf8mb4&parseTime=True"
+  dsn: "admin:admin@tcp(localhost:3306)/mianshiba?charset=utf8mb4&parseTime=True"
   max_open_conns: 100
   max_idle_conns: 10
   conn_max_lifetime: "1h"
@@ -40,5 +40,27 @@ security:
     expose_headers: []
     allow_credentials: true
 
-api:
-  api_key_secret: "${API_ENCRYPT_KEY}"
+openapi:
+  # LLM 给用户的api-key加密密钥
+  openapi_key_secret: "${OPENAPI_ENCRYPT_KEY}"
+  # LLM api-key
+  model_api_key: "${MODEL_OPENAI_API_KEY}"
+  # LLM base-url
+  model_base_url: "https://dashscope.aliyuncs.com/compatible-mode/v1"
+  # LLM model
+  model_model: "qwen-max"
+
+
+minio:
+  endpoint: "localhost:9000"
+  access_key: "${MINIO_ACCESS_KEY}"
+  secret_key: "${MINIO_SECRET_KEY}"
+  bucket: "resume"
+  use_ssl: false
+
+# Kafka配置
+kafka:
+  brokers: "localhost:9092"
+  resume_topic: "resume_parser"
+  group_id: "mianshiba_consumer_group"
+  timeout: "5s"

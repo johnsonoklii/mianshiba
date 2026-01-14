@@ -20,6 +20,34 @@ func Register(r *server.Hertz) {
 	{
 		_api := root.Group("/api", _apiMw()...)
 		{
+			_interview := _api.Group("/interview", _interviewMw()...)
+			{
+				_resume := _interview.Group("/resume", _resumeMw()...)
+				_resume.GET("/list", append(_getresumelistMw(), mianshiba.GetResumeList)...)
+				{
+					_delete := _resume.Group("/delete", _deleteMw()...)
+					_delete.POST("/record", append(_recordresumedeleteinfoMw(), mianshiba.RecordResumeDeleteInfo)...)
+					_delete.GET("/url", append(_getresumedeleteurlMw(), mianshiba.GetResumeDeleteUrl)...)
+				}
+				{
+					_detail := _resume.Group("/detail", _detailMw()...)
+					_detail.GET("/:file_key", append(_getresumedetailMw(), mianshiba.GetResumeDetail)...)
+				}
+				{
+					_download := _resume.Group("/download", _downloadMw()...)
+					_download.GET("/url", append(_getresumedownloadurlMw(), mianshiba.GetResumeDownloadUrl)...)
+				}
+				{
+					_meta := _resume.Group("/meta", _metaMw()...)
+					_meta.POST("/save", append(_saveresumemetainfoMw(), mianshiba.SaveResumeMetaInfo)...)
+				}
+				{
+					_upload := _resume.Group("/upload", _uploadMw()...)
+					_upload.GET("/url", append(_getresumeuploadurlMw(), mianshiba.GetResumeUploadUrl)...)
+				}
+			}
+		}
+		{
 			_user := _api.Group("/user", _userMw()...)
 			_user.POST("/login", append(_loginMw(), mianshiba.Login)...)
 			_user.POST("/logout", append(_logoutMw(), mianshiba.Logout)...)
@@ -32,8 +60,8 @@ func Register(r *server.Hertz) {
 				_model.POST("/create", append(_createusermodelMw(), mianshiba.CreateUserModel)...)
 				_model.GET("/list", append(_listusermodelsMw(), mianshiba.ListUserModels)...)
 				{
-					_delete := _model.Group("/delete", _deleteMw()...)
-					_delete.DELETE("/:id", append(_deleteusermodelMw(), mianshiba.DeleteUserModel)...)
+					_delete0 := _model.Group("/delete", _delete0Mw()...)
+					_delete0.DELETE("/:id", append(_deleteusermodelMw(), mianshiba.DeleteUserModel)...)
 				}
 				{
 					_details := _model.Group("/details", _detailsMw()...)

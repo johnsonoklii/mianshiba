@@ -130,3 +130,73 @@ func _logoutMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _interviewMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _resumeMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _getresumelistMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _recordresumedeleteinfoMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _getresumedeleteurlMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _detailMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _getresumedetailMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _downloadMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _getresumedownloadurlMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _metaMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _saveresumemetainfoMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _uploadMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _getresumeuploadurlMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _delete0Mw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

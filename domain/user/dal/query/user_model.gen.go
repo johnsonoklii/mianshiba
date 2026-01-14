@@ -17,7 +17,7 @@ import (
 
 	"gorm.io/plugin/dbresolver"
 
-	"mianshiba/domain/user/internal/dal/model"
+	"mianshiba/domain/user/dal/model"
 )
 
 func newUserModel(db *gorm.DB, opts ...gen.DOOption) userModel {
@@ -45,8 +45,8 @@ func newUserModel(db *gorm.DB, opts ...gen.DOOption) userModel {
 	_userModel.IsDefault = field.NewInt32(tableName, "is_default")
 	_userModel.CreatedAt = field.NewTime(tableName, "created_at")
 	_userModel.UpdatedAt = field.NewTime(tableName, "updated_at")
-	_userModel.Deleted = field.NewBool(tableName, "deleted")
 	_userModel.DeletedAt = field.NewField(tableName, "deleted_at")
+	_userModel.Deleted = field.NewBool(tableName, "deleted")
 
 	_userModel.fillFieldMap()
 
@@ -74,8 +74,8 @@ type userModel struct {
 	IsDefault       field.Int32  // 是否为默认（0=不是, 1=是）
 	CreatedAt       field.Time   // 创建时间
 	UpdatedAt       field.Time   // 更新时间
+	DeletedAt       field.Field  // 软删除时间
 	Deleted         field.Bool   // 删除状态（0=未删除, 1=已删除）
-	DeletedAt       field.Field  // 删除时间（逻辑删除）
 
 	fieldMap map[string]field.Expr
 }
@@ -109,8 +109,8 @@ func (u *userModel) updateTableName(table string) *userModel {
 	u.IsDefault = field.NewInt32(table, "is_default")
 	u.CreatedAt = field.NewTime(table, "created_at")
 	u.UpdatedAt = field.NewTime(table, "updated_at")
-	u.Deleted = field.NewBool(table, "deleted")
 	u.DeletedAt = field.NewField(table, "deleted_at")
+	u.Deleted = field.NewBool(table, "deleted")
 
 	u.fillFieldMap()
 
@@ -145,8 +145,8 @@ func (u *userModel) fillFieldMap() {
 	u.fieldMap["is_default"] = u.IsDefault
 	u.fieldMap["created_at"] = u.CreatedAt
 	u.fieldMap["updated_at"] = u.UpdatedAt
-	u.fieldMap["deleted"] = u.Deleted
 	u.fieldMap["deleted_at"] = u.DeletedAt
+	u.fieldMap["deleted"] = u.Deleted
 }
 
 func (u userModel) clone(db *gorm.DB) userModel {

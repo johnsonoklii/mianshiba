@@ -2,8 +2,8 @@ package dal
 
 import (
 	"context"
-	"mianshiba/domain/user/internal/dal/model"
-	"mianshiba/domain/user/internal/dal/query"
+	"mianshiba/domain/user/dal/model"
+	"mianshiba/domain/user/dal/query"
 
 	"gorm.io/gorm"
 )

@@ -22,7 +22,9 @@ type Config struct {
 	Redis    RedisConfig    `yaml:"redis"`
 	Hertz    HertzConfig    `yaml:"hertz"`
 	Security SecurityConfig `yaml:"security"`
-	API      APIConfig      `yaml:"api"`
+	OpenAPI  OpenAPIConfig  `yaml:"openapi"`
+	MinIO    MinIOConfig    `yaml:"minio"`
+	Kafka    KafkaConfig    `yaml:"kafka"`
 }
 
 // CORSConfig CORS配置
@@ -34,8 +36,11 @@ type CORSConfig struct {
 	AllowCredentials bool     `yaml:"allow_credentials"`
 }
 
-type APIConfig struct {
-	APIKeySecret string `yaml:"api_key_secret"`
+type OpenAPIConfig struct {
+	APIKeySecret string `yaml:"openapi_key_secret"`
+	ModelAPIKey  string `yaml:"model_api_key"`
+	ModelBaseURL string `yaml:"model_base_url"`
+	ModelModel   string `yaml:"model_model"`
 }
 
 // DatabaseConfig 数据库配置
@@ -76,10 +81,30 @@ type SecurityConfig struct {
 	CORS             CORSConfig `yaml:"cors"`
 }
 
+// MinIOConfig MinIO配置
+type MinIOConfig struct {
+	Endpoint  string `yaml:"endpoint"`
+	AccessKey string `yaml:"access_key"`
+	SecretKey string `yaml:"secret_key"`
+	Bucket    string `yaml:"bucket"`
+	UseSSL    bool   `yaml:"use_ssl"`
+}
+
+// KafkaConfig Kafka配置
+type KafkaConfig struct {
+	Brokers     string `yaml:"brokers"`
+	ResumeTopic string `yaml:"resume_topic"`
+	GroupID     string `yaml:"group_id"`
+	Timeout     string `yaml:"timeout"`
+}
+
 func (c *Config) ExpandEnv() {
 	c.Redis.Password = expandEnvVar(c.Redis.Password)
 	c.Security.JWTSecret = expandEnvVar(c.Security.JWTSecret)
-	c.API.APIKeySecret = expandEnvVar(c.API.APIKeySecret)
+	c.OpenAPI.APIKeySecret = expandEnvVar(c.OpenAPI.APIKeySecret)
+	c.OpenAPI.ModelAPIKey = expandEnvVar(c.OpenAPI.ModelAPIKey)
+	c.MinIO.AccessKey = expandEnvVar(c.MinIO.AccessKey)
+	c.MinIO.SecretKey = expandEnvVar(c.MinIO.SecretKey)
 }
 
 // Global 全局配置实例

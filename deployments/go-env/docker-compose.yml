@@ -235,3 +235,64 @@ services:
     networks:
       - backend
     restart: always
+
+  minio:
+    build:
+      context: ./minio
+    container_name: mianshiba_minio
+    image: minio/minio:latest
+    environment:
+      - TZ=${TZ}
+      - MINIO_ROOT_USER=${MINIO_ACCESS_KEY}
+      - MINIO_ROOT_PASSWORD=${MINIO_SECRET_KEY}
+    privileged: true
+    volumes:
+      - ${DATA_PATH_HOST}/minio/data:/data
+      - ${DATA_PATH_HOST}/minio/config:/root/.minio
+    ports:
+      - "${MINIO_PORT}:9000"
+      - "${MINIO_CONSOLE_PORT}:9001"
+    networks:
+      - backend
+    restart: always
+    command: server /data --console-address ":9001"
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    container_name: mianshiba_kafka
+    environment:
+      - KAFKA_NODE_ID=1
+      - KAFKA_PROCESS_ROLES=broker,controller
+      - KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092
+      - KAFKA_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      - KAFKA_CONTROLLER_QUORUM_VOTERS=1@kafka:9093
+      - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
+      - CLUSTER_ID=MkU3OEVBNTcwNTJENDM2Qk
+    ports:
+      - "9092:9092"
+      - "9093:9093"
+    volumes:
+      - ${DATA_PATH_HOST}/kafka/data:/var/lib/kafka/data
+    networks:
+      - backend
+    restart: always
+
+  # Kafka Manager
+  kafka-manager:
+    build:
+      context: ./kafka
+    container_name: mianshiba_kafka_manager
+    image: hlebalbau/kafka-manager:latest
+    depends_on:
+      - kafka
+    environment:
+      - TZ=${TZ}
+      - ZK_HOSTS=zookeeper:2181
+      - APPLICATION_SECRET="random-secret"
+    ports:
+      - "${KAFKA_MANAGER_PORT}:9000"
+    networks:
+      - backend
+    restart: always

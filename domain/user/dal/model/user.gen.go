@@ -23,7 +23,7 @@ type User struct {
 	CreatedAt time.Time      `gorm:"column:created_at;not null;default:CURRENT_TIMESTAMP(3);autoCreateTime:milli" json:"created_at"`
 	UpdatedAt time.Time      `gorm:"column:updated_at;not null;default:CURRENT_TIMESTAMP(3);autoUpdateTime:milli" json:"updated_at"`
 	DeletedAt gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
-	Deleted   bool           `gorm:"column:deleted" json:"deleted"`
+	Deleted   bool           `gorm:"column:deleted;not null;comment:删除状态（0=未删除, 1=已删除）" json:"deleted"` // 删除状态（0=未删除, 1=已删除）
 }
 
 // TableName User's table name

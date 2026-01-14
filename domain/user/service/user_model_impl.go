@@ -3,8 +3,8 @@ package service
 import (
 	"context"
 	"fmt"
+	"mianshiba/domain/user/dal/model"
 	"mianshiba/domain/user/entity"
-	"mianshiba/domain/user/internal/dal/model"
 	"mianshiba/domain/user/repository"
 	"mianshiba/infra/contract/cache"
 	"mianshiba/infra/contract/idgen"

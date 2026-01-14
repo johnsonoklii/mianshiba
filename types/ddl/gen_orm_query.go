@@ -32,9 +32,12 @@ import (
 )
 
 var path2Table2Columns2Model = map[string]map[string]map[string]any{
-	"domain/user/internal/dal/query": {
+	"domain/user/dal/query": {
 		"user":       {},
 		"user_model": {},
+	},
+	"domain/interview/dal/query": {
+		"resume": {},
 	},
 }
 
@@ -43,7 +46,7 @@ var fieldNullablePath = map[string]bool{}
 func main() {
 	dsn := os.Getenv("MYSQL_DSN")
 	os.Setenv("LANG", "en_US.UTF-8")
-	dsn = "lizq:ai5201314.@tcp(localhost:3306)/mianshiba?charset=utf8mb4&parseTime=True"
+	dsn = "admin:admin@tcp(localhost:3306)/mianshiba?charset=utf8mb4&parseTime=True"
 	gormDB, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true,

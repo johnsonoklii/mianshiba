@@ -4,6 +4,7 @@ package mianshiba
 
 import (
 	"github.com/apache/thrift/lib/go/thrift"
+	"mianshiba/api/model/interview"
 	"mianshiba/api/model/user"
 )
 
@@ -33,11 +34,46 @@ func NewUserServiceClient(c thrift.TClient) *UserServiceClient {
 	}
 }
 
+type InterviewService interface {
+	interview.InterviewService
+}
+
+type InterviewServiceClient struct {
+	*interview.InterviewServiceClient
+}
+
+func NewInterviewServiceClientFactory(t thrift.TTransport, f thrift.TProtocolFactory) *InterviewServiceClient {
+	return &InterviewServiceClient{
+		InterviewServiceClient: interview.NewInterviewServiceClientFactory(t, f),
+	}
+}
+
+func NewInterviewServiceClientProtocol(t thrift.TTransport, iprot thrift.TProtocol, oprot thrift.TProtocol) *InterviewServiceClient {
+	return &InterviewServiceClient{
+		InterviewServiceClient: interview.NewInterviewServiceClientProtocol(t, iprot, oprot),
+	}
+}
+
+func NewInterviewServiceClient(c thrift.TClient) *InterviewServiceClient {
+	return &InterviewServiceClient{
+		InterviewServiceClient: interview.NewInterviewServiceClient(c),
+	}
+}
+
 type UserServiceProcessor struct {
 	*user.UserServiceProcessor
 }
 
 func NewUserServiceProcessor(handler UserService) *UserServiceProcessor {
 	self := &UserServiceProcessor{user.NewUserServiceProcessor(handler)}
+	return self
+}
+
+type InterviewServiceProcessor struct {
+	*interview.InterviewServiceProcessor
+}
+
+func NewInterviewServiceProcessor(handler InterviewService) *InterviewServiceProcessor {
+	self := &InterviewServiceProcessor{interview.NewInterviewServiceProcessor(handler)}
 	return self
 }

@@ -31,6 +31,11 @@ const (
 	S3BucketEndpoint   = "S3_BUCKET_ENDPOINT"
 )
 
+const (
+	ApplyUploadActionURI = "/api/common/upload/apply_upload_action"
+	UploadURI            = "/api/common/upload"
+)
+
 func JwtCacheKey(userID int64) string {
 	return fmt.Sprintf("%s:%d", JwtTokenPrefix, userID)
 }

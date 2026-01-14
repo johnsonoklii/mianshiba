@@ -2,8 +2,8 @@ package repository
 
 import (
 	"context"
-	"mianshiba/domain/user/internal/dal"
-	"mianshiba/domain/user/internal/dal/model"
+	"mianshiba/domain/user/dal"
+	"mianshiba/domain/user/dal/model"
 
 	"gorm.io/gorm"
 )

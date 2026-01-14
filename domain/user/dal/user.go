@@ -3,8 +3,8 @@ package dal
 import (
 	"context"
 	"errors"
-	"mianshiba/domain/user/internal/dal/model"
-	"mianshiba/domain/user/internal/dal/query"
+	"mianshiba/domain/user/dal/model"
+	"mianshiba/domain/user/dal/query"
 	"time"
 
 	"gorm.io/gorm"
